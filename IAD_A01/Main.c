@@ -7,6 +7,12 @@
 
 #pragma warning (disable:4996)
 
+// prototypes
+void Server(int port);
+void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[]);
+
+
+
 int main(int argc, char* argv[])
 {
 	printf("Total arguments: %d\n\n", argc);
@@ -22,12 +28,14 @@ int main(int argc, char* argv[])
 	char switches[][CharLength] = { "-a", "-p", "-s", "-n" };
 
 	// bool flag initialised to all false
-	bool flag[4] = {false};
+	bool flag[6] = {false};
 
 	int index = 0;
 	int c = 0;
 
-
+	 
+	
+	
 
 	// This loop checks if all the switches are present in the command line
 	// running through all the command line arguments
@@ -36,23 +44,79 @@ int main(int argc, char* argv[])
 		// running through all the switches to make sure everything exists
 		for (int i = 0; i < TOTAL_SWITCHES; i++)
 		{
-			if (strcmp(argv[k], switches[i]) == 0)
-			{				
-				flag[i] = true;
+			if (stricmp(argv[k], switches[i]) == 0)
+			{					
+				if (ValidateField(argv, k, i))
+				{
+					flag[i] = true;
+				}
 				i++;
 			}
 		}
+
+		if (stricmp(argv[k], "-TCP") == 0)
+		{
+			// 5th index (for tcp)
+			flag[4] = true;
+		}
+		else
+			if (stricmp(argv[k], "-UDP") == 0)
+			{
+				// 6th index (for udp)
+				flag[5] = true;
+			}
 	}
 
+	
 
-	for (int i = 0; i < 4; i++)
+	//		0: -a address
+	//		1: -p port
+	//		2: -s block size
+	//		3: -n number of blocks
+	//		4: -TCP
+	//		5: -UDP
+
+	for (int i = 0; i < 6; i++)
 	{
 		printf("%d: %s\n", i, flag[i]?"True":"False");
 	}
+
+	// if server, call server
+	if (flag[1] == true && flag[0] == false && flag[2] == false &&
+		flag[3] == false && flag[4] == false && flag[5] == false)
+	{
+		Server(100);
+	}
+	else
+		// call client if sufficient arguments are there
+		if (flag[1] == true && flag[0] == true && flag[2] == true &&
+			flag[3] == true && (flag[4] == true || flag[5] == true))
+		{
+			Client("something", "", "", "", "");
+		}
+		// print error if not sufficient arguments are there
+		else
+			printf("Invalid arguments!!");
+
+
 
 
 
 	getch();
 	return 0;
+}
+
+
+void Server(int port)
+{
+	printf("\nI am a server running on port %d", port);
+}
+
+
+void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[])
+{
+	printf("I'm a client with following attributes: \n");
+		printf("\n\tAddress: %s\n\tPort: %s\n\tBlocksize: %s\n\tTotal Blocks: %s\n\tProtocol: %s",
+			adr, port, blocksize, totalblocks, protocol);
 }
 
