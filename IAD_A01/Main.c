@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
 	printf("\n----------------------------------------------------------\n");
 
 	char switches[][CharLength] = { "-a", "-p", "-s", "-n" };
+	char Fields[][CharLength] = { "Address", "Port", "Size", "Number of Blocks" };
 
 	// bool flag initialised to all false
 	bool flag[6] = {false};
@@ -42,18 +43,26 @@ int main(int argc, char* argv[])
 	// running through all the command line arguments
 	for (int k = 1; k < argc; k++)
 	{
+		bool switchflag = false;
+		int index = 0;
+
 		// running through all the switches to make sure everything exists
 		for (int i = 0; i < TOTAL_SWITCHES; i++)
 		{
 			if (stricmp(argv[k], switches[i]) == 0)
-			{					
+			{
 				if (ValidateField(argv, k, i))
 				{
+					printf("Valid Flag: %s\n", Fields[i]);
 					flag[i] = true;
+					index = i;
 				}
-				i++;
+				else
+					printf("Invalid Flag: %s\n", Fields[i]);
 			}
 		}
+
+			
 
 		if (stricmp(argv[k], "-TCP") == 0)
 		{
@@ -102,7 +111,7 @@ int main(int argc, char* argv[])
 
 
 
-
+	// get input character before ending the application
 	getch();
 	return 0;
 }
@@ -115,24 +124,29 @@ bool ValidateField(char* argv[], int FieldIndex, int ValidationIndex)
 	switch (ValidationIndex)
 	{
 	case 0: 
-		printf("Validating address\n");
+		//printf("\nValidating address\n");
 		flag = ValidateAddress(argv[FieldIndex + 1]);
 		break;
+
 	case 1:
-		printf("Validating port\n");
-		flag = ValidatePort(argv[FieldIndex + 1]);
+		//printf("Validating port\n");
+		flag = ValidateDigits(argv[FieldIndex + 1]);
 		break;
 	case 2:
-		printf("Validating block size\n");
+		//printf("Validating block size\n");
+		flag = ValidateDigits(argv[FieldIndex + 1]);
 		break;
 	case 3:
-		printf("Validating number of blocks\n");
+		//printf("Validating number of blocks\n");
+		flag = ValidateDigits(argv[FieldIndex + 1]);
 		break;
 	case 4:
-		printf("Validating tcp\n");
+		//printf("Validating tcp\n");
+		flag = true;
 		break;
 	case 5: 
-		printf("Validating udp\n");
+		//printf("Validating udp\n");
+		flag = true;
 		break;
 
 	default:
