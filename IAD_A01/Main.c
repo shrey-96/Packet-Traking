@@ -10,6 +10,7 @@
 // prototypes
 void Server(int port);
 void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[]);
+bool ValidateField(char* argv[], int FieldIndex, int ValidationIndex);
 
 
 
@@ -84,7 +85,7 @@ int main(int argc, char* argv[])
 	// if server, call server
 	if (flag[1] == true && flag[0] == false && flag[2] == false &&
 		flag[3] == false && flag[4] == false && flag[5] == false)
-	{
+	{		
 		Server(100);
 	}
 	else
@@ -106,17 +107,44 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-
-void Server(int port)
+// validates the command line arguments, returns bool flag based on valid/invalid data
+bool ValidateField(char* argv[], int FieldIndex, int ValidationIndex)
 {
-	printf("\nI am a server running on port %d", port);
+	bool flag = true;
+
+	switch (ValidationIndex)
+	{
+	case 0: 
+		printf("Validating address\n");
+		flag = ValidateAddress(argv[FieldIndex + 1]);
+		break;
+	case 1:
+		printf("Validating port\n");
+		flag = ValidatePort(argv[FieldIndex + 1]);
+		break;
+	case 2:
+		printf("Validating block size\n");
+		break;
+	case 3:
+		printf("Validating number of blocks\n");
+		break;
+	case 4:
+		printf("Validating tcp\n");
+		break;
+	case 5: 
+		printf("Validating udp\n");
+		break;
+
+	default:
+		flag = false;
+		break;
+	}
+	
+	return flag;
 }
 
 
-void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[])
-{
-	printf("I'm a client with following attributes: \n");
-		printf("\n\tAddress: %s\n\tPort: %s\n\tBlocksize: %s\n\tTotal Blocks: %s\n\tProtocol: %s",
-			adr, port, blocksize, totalblocks, protocol);
-}
+
+
+
 

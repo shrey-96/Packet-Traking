@@ -18,5 +18,14 @@
     <ClCompile Include="Main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Server.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Validation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
