@@ -1,16 +1,13 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdbool.h>
+//#include <stdio.h>
+//#include <stdbool.h>
+#include "headers.h"
 
 #define CharLength 100
 #define TOTAL_SWITCHES 4
 
-#pragma warning (disable:4996)
+//#pragma warning (disable:4996)
 
-// prototypes
-void Server(int port);
-void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[]);
-bool ValidateField(char* argv[], int FieldIndex, int ValidationIndex);
+
 
 
 
@@ -46,10 +43,13 @@ int main(int argc, char* argv[])
 		bool switchflag = false;
 		int index = 0;
 
+		// convert the string to lowercase before making any comparisons
+		converttolowercase(argv[k]);
+
 		// running through all the switches to make sure everything exists
 		for (int i = 0; i < TOTAL_SWITCHES; i++)
 		{
-			if (stricmp(argv[k], switches[i]) == 0)
+			if (strcmp(argv[k], switches[i]) == 0)
 			{
 				if (ValidateField(argv, k, i))
 				{
@@ -63,14 +63,14 @@ int main(int argc, char* argv[])
 		}
 
 			
-
-		if (stricmp(argv[k], "-TCP") == 0)
+		
+		if (strcmp(argv[k], "-tcp") == 0)
 		{
 			// 5th index (for tcp)
 			flag[4] = true;
 		}
 		else
-			if (stricmp(argv[k], "-UDP") == 0)
+			if (strcmp(argv[k], "-udp") == 0)
 			{
 				// 6th index (for udp)
 				flag[5] = true;
@@ -112,8 +112,18 @@ int main(int argc, char* argv[])
 
 
 	// get input character before ending the application
-	getch();
+	getchar();
+
 	return 0;
+}
+
+// Convert strings to lowercase
+void converttolowercase(char* temp)
+{
+	for (unsigned int i = 0; i < strlen(temp); i++)
+	{
+		temp[i] = tolower(temp[i]);
+	}
 }
 
 // validates the command line arguments, returns bool flag based on valid/invalid data

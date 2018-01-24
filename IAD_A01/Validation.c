@@ -1,7 +1,11 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdbool.h>
-#include <ctype.h>
+//#include <stdio.h>
+//#include <stdbool.h>
+//#include <ctype.h>
+//#include <string.h>
+
+#include "headers.h"
+
+
 
 // validate port
 bool ValidateDigits(char digits[])
@@ -9,7 +13,7 @@ bool ValidateDigits(char digits[])
 	bool flag = true;
 
 	// check if each character of string is a digit
-	for (int i = 0; i < strlen(digits); i++)
+	for (unsigned int i = 0; i < strlen(digits); i++)
 	{
 		if (!isdigit(digits[i]))
 		{
@@ -37,7 +41,7 @@ bool ValidateAddress(char adr[])
 	bool Valid = false;
 
 	// run through each character of address and validate it
-	for (int i = 0; i < strlen(adr); i++)
+	for (unsigned int i = 0; i < strlen(adr); i++)
 	{
 		// check is char is either a digit or a period
 		if (!isdigit(adr[i]) && adr[i] != '.')
