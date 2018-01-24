@@ -1,3 +1,5 @@
+#include "headers.h"
+
 void Client(char adr[], char port[], char blocksize[], char totalblocks[], char protocol[])
 {
 	printf("I'm a client with following attributes: \n");
